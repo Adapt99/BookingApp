@@ -6,11 +6,16 @@ import "fmt"
 
 //Implement a "main" function to print a message to the console. A "main" function executes by default when you run the "main" package
 func main() {
-	//Println(prints the message in a new line)
-	fmt.Println("Welcome to our booking application")
-	fmt.Println("Get your tickets here to attend")
-	//Define the variable "conferenceName" and store the constant value "Go Conference"
+	//Define the variable "conferenceName" and store the value "Go Conference"
+	//Variables in Go must be used in the codebase.
 	var conferenceName = "Go Conference"
-	//Variables in Go must be used in the codebase. The line below uses the variable.
-	fmt.Println(conferenceName)
+
+	//Declare "const", value CAN NOT change
+	const conferenceTickets = 50
+	var remainingTickets = 50
+
+	//Println(prints the message in a new line)
+	fmt.Println("Welcome to our", conferenceName, "booking application")
+	fmt.Println("We have a total of", conferenceTickets, "tickets and", remainingTickets, "are still available.")
+	fmt.Println("Get your tickets here to attend")
 }
