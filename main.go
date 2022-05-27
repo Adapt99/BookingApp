@@ -9,4 +9,8 @@ func main() {
 	//Println(prints the message in a new line)
 	fmt.Println("Welcome to our booking application")
 	fmt.Println("Get your tickets here to attend")
+	//Define the variable "conferenceName" and store the constant value "Go Conference"
+	var conferenceName = "Go Conference"
+	//Variables in Go must be used in the codebase. The line below uses the variable.
+	fmt.Println(conferenceName)
 }
