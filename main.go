@@ -19,4 +19,15 @@ func main() {
 	fmt.Printf("We have a total of %v tickets and %v are still available.\n", conferenceTickets, remainingTickets)
 	//Println(prints the message in a new line)
 	fmt.Println("Get your tickets here to attend")
+
+	//ask user for their name
+	//in Go variables without a value must be assigned a data type
+	//String data types generally for text based
+	//Int(Integer) data types generally for whole numbers
+	var userName string
+	var userTickets int
+
+	userName = "Tom"
+	userTickets = 2
+	fmt.Printf("User %v booked %v tickets.\n", userName, userTickets)
 }
