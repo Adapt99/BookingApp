@@ -16,8 +16,8 @@ func main() {
 	//var conferenceName = "Go Conference"
 
 	//Declare "const", value CAN NOT change
-	const conferenceTickets = 50
-	var remainingTickets = 50
+	const conferenceTickets int = 50
+	var remainingTickets uint = 50
 
 	//Printf(Prints formatted data, some text with a variable %s, myVariable)
 	//Added \n at end of sentence to create a new line
@@ -27,6 +27,12 @@ func main() {
 	//Println(prints the message in a new line)
 	fmt.Println("Get your tickets here to attend")
 
+	//Arrays are data structures to store collection of elements in a single variable
+	//Arrays have a fixed size(how many elements the array can hold)
+	//Only can use the stored data type
+	var bookings = [50]string{}
+	//Alternate syntax | var bookings [50]string
+
 	//ask user for their name
 
 	//in Go variables without a value must be assigned a data type
@@ -35,16 +41,30 @@ func main() {
 	var firstName string
 	var lastName string
 	var email string
-	var userTickets int
+	var userTickets uint
 	//Scan interprets user input
 	//Pointer is a variable that points to the memory address of another variable
 	fmt.Println("Enter your first name: ")
 	fmt.Scan(&firstName)
+
 	fmt.Println("Enter your last name: ")
 	fmt.Scan(&lastName)
+
 	fmt.Println("Enter your email address: ")
 	fmt.Scan(&email)
+
 	fmt.Println("Enter number of tickets: ")
 	fmt.Scan(&userTickets)
+
+	remainingTickets = remainingTickets - userTickets
+
+	bookings[0] = firstName + " " + lastName
+
+	fmt.Printf("The whole array: %v\n", bookings)
+	fmt.Printf("The first value: %v\n", bookings[0])
+	fmt.Printf("Array type: %T\n", bookings)
+	fmt.Printf("Array length: %v\n", len(bookings))
+
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
+	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 }
