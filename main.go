@@ -19,6 +19,14 @@ func main() {
 	const conferenceTickets int = 50
 	var remainingTickets uint = 50
 
+	//Arrays are data structures to store collection of elements in a single variable
+	//Arrays have a fixed size(how many elements the array can hold)
+	//Only can use the stored data type
+	//var bookings = [50]string{}
+	//Alternate syntax | var bookings [50]string
+	var bookings []string
+	//Alternate syntax for slice | bookings := []string{}
+
 	//Printf(Prints formatted data, some text with a variable %s, myVariable)
 	//Added \n at end of sentence to create a new line
 	// fmt.Printf("conferenceTickets is %T, remaining tickets is %T, conferenceName is %T\n", conferenceTickets, remainingTickets, conferenceName)
@@ -27,11 +35,10 @@ func main() {
 	//Println(prints the message in a new line)
 	fmt.Println("Get your tickets here to attend")
 
-	//Arrays are data structures to store collection of elements in a single variable
-	//Arrays have a fixed size(how many elements the array can hold)
-	//Only can use the stored data type
-	var bookings = [50]string{}
-	//Alternate syntax | var bookings [50]string
+	//Problems with Arrays
+	//Maybe 1 user books all tickets
+	//Having an array with size 50, with only 1 element inside is not efficient
+	//What if we don't know the size when creating it?
 
 	//ask user for their name
 
@@ -58,12 +65,12 @@ func main() {
 
 	remainingTickets = remainingTickets - userTickets
 
-	bookings[0] = firstName + " " + lastName
+	bookings = append(bookings, firstName+" "+lastName)
 
-	fmt.Printf("The whole array: %v\n", bookings)
+	fmt.Printf("The whole slice: %v\n", bookings)
 	fmt.Printf("The first value: %v\n", bookings[0])
-	fmt.Printf("Array type: %T\n", bookings)
-	fmt.Printf("Array length: %v\n", len(bookings))
+	fmt.Printf("Slice type: %T\n", bookings)
+	fmt.Printf("Slicee length: %v\n", len(bookings))
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
