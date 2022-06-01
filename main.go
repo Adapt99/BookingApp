@@ -2,6 +2,7 @@
 package main
 
 //Import the popular "fmt" package, which contains functions for formatting text, including printing to the console.
+//Imported strings package to split the string with white space as separator, returns a slice with the split elements
 import (
 	"fmt"
 	"strings"
@@ -45,7 +46,8 @@ func main() {
 
 	//ask user for their name
 	//Created for loop to loop the booking application
-	for {
+	//Added condition below to run loop as long as it is met
+	for remainingTickets > 0 && len(bookings) < 50 {
 		//in Go variables without a value must be assigned a data type
 		//String data types generally for text based
 		//Int(Integer) data types generally for whole numbers
@@ -67,30 +69,46 @@ func main() {
 		fmt.Println("Enter number of tickets: ")
 		fmt.Scan(&userTickets)
 
-		remainingTickets = remainingTickets - userTickets
+		if userTickets <= remainingTickets {
+			remainingTickets = remainingTickets - userTickets
+			bookings = append(bookings, firstName+" "+lastName)
 
-		bookings = append(bookings, firstName+" "+lastName)
+			//fmt.Printf("The whole slice: %v\n", bookings)
+			//fmt.Printf("The first value: %v\n", bookings[0])
+			//fmt.Printf("Slice type: %T\n", bookings)
+			//fmt.Printf("Slice length: %v\n", len(bookings))
 
-		//fmt.Printf("The whole slice: %v\n", bookings)
-		//fmt.Printf("The first value: %v\n", bookings[0])
-		//fmt.Printf("Slice type: %T\n", bookings)
-		//fmt.Printf("Slicee length: %v\n", len(bookings))
+			fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
+			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
-		fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
-		fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+			//Added "for each" loop nested inside for loop
+			//For each full entry, extract only first names from the bookings
+			//Created Slice with empty values named firstNames
+			//_ (underscore) Blank idenitifier | ignores a variable you don't want to use
+			//Range iterates over elements for different data structures (Not only arrays and slices)
+			//For arrays and slices, range provides the index and value for each element
+			firstNames := []string{}
+			for _, booking := range bookings {
+				var names = strings.Fields(booking)
+				firstNames = append(firstNames, names[0])
+			}
+			fmt.Printf("The first names of bookings are: %v\n", firstNames)
 
-		//Added "for each" loop nested inside for loop
-		//For each full entry, extract only first names from the bookings
-		//Created Slice with empty values named firstNames
-		//_ (underscore) Blank idenitifier | ignores a variable you don't want to use
-		//Range iterates over elements for different data structures (Not only arrays and slices)
-		//For arrays and slices, range provides the index and value for each element
-		//Imported strings package to split the string with white space as separator, returns a slice with the split elements
-		firstNames := []string{}
-		for _, booking := range bookings {
-			var names = strings.Fields(booking)
-			firstNames = append(firstNames, names[0])
+			//var noTicketsRemaining bool = remainingTickets == 0
+			//noTicketsRemaining := remainingTickets == 0
+			if remainingTickets == 0 {
+				//End the program
+				fmt.Println("Our conference is booked. Please come again next time.")
+				break
+			}
+		} else {
+			fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets\n", remainingTickets, userTickets)
+			//continue causes loop to skip the remainder of its body
+			//immediately retesting its condition
+			//continue
+			//else if userTickets == remainingTickets
+			//You can have unlimited "else if" statments
+			//Only 1 "if" statement and 1 "else" statement
 		}
-		fmt.Printf("The first names of bookings are: %v\n", firstNames)
 	}
 }
