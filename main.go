@@ -2,7 +2,10 @@
 package main
 
 //Import the popular "fmt" package, which contains functions for formatting text, including printing to the console.
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 //Implement a "main" function to print a message to the console. A "main" function executes by default when you run the "main" package
 func main() {
@@ -41,37 +44,53 @@ func main() {
 	//What if we don't know the size when creating it?
 
 	//ask user for their name
+	//Created for loop to loop the booking application
+	for {
+		//in Go variables without a value must be assigned a data type
+		//String data types generally for text based
+		//Int(Integer) data types generally for whole numbers
+		var firstName string
+		var lastName string
+		var email string
+		var userTickets uint
+		//Scan interprets user input
+		//Pointer is a variable that points to the memory address of another variable
+		fmt.Println("Enter your first name: ")
+		fmt.Scan(&firstName)
 
-	//in Go variables without a value must be assigned a data type
-	//String data types generally for text based
-	//Int(Integer) data types generally for whole numbers
-	var firstName string
-	var lastName string
-	var email string
-	var userTickets uint
-	//Scan interprets user input
-	//Pointer is a variable that points to the memory address of another variable
-	fmt.Println("Enter your first name: ")
-	fmt.Scan(&firstName)
+		fmt.Println("Enter your last name: ")
+		fmt.Scan(&lastName)
 
-	fmt.Println("Enter your last name: ")
-	fmt.Scan(&lastName)
+		fmt.Println("Enter your email address: ")
+		fmt.Scan(&email)
 
-	fmt.Println("Enter your email address: ")
-	fmt.Scan(&email)
+		fmt.Println("Enter number of tickets: ")
+		fmt.Scan(&userTickets)
 
-	fmt.Println("Enter number of tickets: ")
-	fmt.Scan(&userTickets)
+		remainingTickets = remainingTickets - userTickets
 
-	remainingTickets = remainingTickets - userTickets
+		bookings = append(bookings, firstName+" "+lastName)
 
-	bookings = append(bookings, firstName+" "+lastName)
+		//fmt.Printf("The whole slice: %v\n", bookings)
+		//fmt.Printf("The first value: %v\n", bookings[0])
+		//fmt.Printf("Slice type: %T\n", bookings)
+		//fmt.Printf("Slicee length: %v\n", len(bookings))
 
-	fmt.Printf("The whole slice: %v\n", bookings)
-	fmt.Printf("The first value: %v\n", bookings[0])
-	fmt.Printf("Slice type: %T\n", bookings)
-	fmt.Printf("Slicee length: %v\n", len(bookings))
+		fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
+		fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
-	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
-	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+		//Added "for each" loop nested inside for loop
+		//For each full entry, extract only first names from the bookings
+		//Created Slice with empty values named firstNames
+		//_ (underscore) Blank idenitifier | ignores a variable you don't want to use
+		//Range iterates over elements for different data structures (Not only arrays and slices)
+		//For arrays and slices, range provides the index and value for each element
+		//Imported strings package to split the string with white space as separator, returns a slice with the split elements
+		firstNames := []string{}
+		for _, booking := range bookings {
+			var names = strings.Fields(booking)
+			firstNames = append(firstNames, names[0])
+		}
+		fmt.Printf("The first names of bookings are: %v\n", firstNames)
+	}
 }
