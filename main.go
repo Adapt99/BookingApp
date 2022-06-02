@@ -69,7 +69,20 @@ func main() {
 		fmt.Println("Enter number of tickets: ")
 		fmt.Scan(&userTickets)
 
-		if userTickets <= remainingTickets {
+		//Validate user input of first and last name | Length of names entered must be greater or equal to 2
+		var isValidName bool = len(firstName) >= 2 && len(lastName) >= 2
+		//Validate user input of email | Email must contain @ symbol
+		isValidEmail := strings.Contains(email, "@")
+		//Validate user input of ticket number | Number must be positive and greater than 0 AND less than or equal to the amount of remaining tickets
+		isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
+
+		//isValidCity := city == "Singapore" || city == "London"
+		//!isValidCity
+		//isInvalidCity := city != "Singapore" || city != "London"
+
+		//Modified if statement to include user input validation
+		//Application will not run if criteria isn't met
+		if isValidName && isValidEmail && isValidTicketNumber {
 			remainingTickets = remainingTickets - userTickets
 			bookings = append(bookings, firstName+" "+lastName)
 
@@ -102,7 +115,18 @@ func main() {
 				break
 			}
 		} else {
-			fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets\n", remainingTickets, userTickets)
+			//Added Error messages to display proper feedback
+			if !isValidName {
+				fmt.Println("First name or last name entered is too short")
+			}
+			if !isValidEmail {
+				fmt.Println("Email address entered doesn't contain @ symbol")
+			}
+			if !isValidTicketNumber {
+				fmt.Println("Number of tickets entered is invalid")
+			}
+			//fmt.Println("Your input data is invalid, please try again.")
+			//fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets\n", remainingTickets, userTickets)
 			//continue causes loop to skip the remainder of its body
 			//immediately retesting its condition
 			//continue
