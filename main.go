@@ -135,4 +135,17 @@ func main() {
 			//Only 1 "if" statement and 1 "else" statement
 		}
 	}
+	//Switch statements
+	//Based on selected city, different code will be executed
+	//city := "London"
+	//switch city {
+	//case "New York":
+	//execute code
+	//case "Singapore", "Hong Kong":
+	//execute code for Singapore & Hong Kong
+	//case "London":
+	//execute code
+	//default:
+	//fmt.Print("No valid city selected")
+	//}
 }
