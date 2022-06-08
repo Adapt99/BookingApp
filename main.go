@@ -4,6 +4,7 @@ package main
 //Import the popular "fmt" package, which contains functions for formatting text, including printing to the console.
 //Imported strings package to split the string with white space as separator, returns a slice with the split elements
 import (
+	"BookApp1-techworldnana/helper"
 	"fmt"
 	"strings"
 )
@@ -92,7 +93,7 @@ func main() {
 		//Validate user input of ticket number | Number must be positive and greater than 0 AND less than or equal to the amount of remaining tickets
 		//isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
 
-		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets)
+		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)
 		//isValidCity := city == "Singapore" || city == "London"
 		//!isValidCity
 		//isInvalidCity := city != "Singapore" || city != "London"
@@ -194,13 +195,13 @@ func getFirstNames() []string {
 	return firstNames
 }
 
-func validateUserInput(firstName string, lastName string, email string, userTickets uint) (bool, bool, bool) {
-	var isValidName bool = len(firstName) >= 2 && len(lastName) >= 2
-	isValidEmail := strings.Contains(email, "@")
-	isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
-	//A Go function can return multiple values
-	return isValidName, isValidEmail, isValidTicketNumber
-}
+//func validateUserInput(firstName string, lastName string, email string, userTickets uint) (bool, bool, bool) {
+//	var isValidName bool = len(firstName) >= 2 && len(lastName) >= 2
+//	isValidEmail := strings.Contains(email, "@")
+//	isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
+//	//A Go function can return multiple values
+//	return isValidName, isValidEmail, isValidTicketNumber
+//}
 
 func getUserInput() (string, string, string, uint) {
 	var firstName string
