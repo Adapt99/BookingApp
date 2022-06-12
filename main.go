@@ -6,6 +6,7 @@ package main
 import (
 	//"BookApp1-techworldnana/helper"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -20,7 +21,7 @@ const conferenceTickets int = 50
 
 var conferenceName = "Go Conference"
 var remainingTickets uint = 50
-var bookings []string
+var bookings = make([]map[string]string, 0)
 
 func main() {
 	//Define the variable "conferenceName" and store the value "Go Conference"
@@ -127,7 +128,7 @@ func main() {
 			//fmt.Printf("The first names of bookings are: %v\n", firstNames)
 
 			firstNames := getFirstNames()
-			fmt.Printf("the first names of bookings are: %v\n", firstNames)
+			fmt.Printf("The first names of bookings are: %v\n", firstNames)
 			//var noTicketsRemaining bool = remainingTickets == 0
 			//noTicketsRemaining := remainingTickets == 0
 			if remainingTickets == 0 {
@@ -186,8 +187,8 @@ func greetUsers() {
 func getFirstNames() []string {
 	firstNames := []string{}
 	for _, booking := range bookings {
-		var names = strings.Fields(booking)
-		firstNames = append(firstNames, names[0])
+		//var names = strings.Fields(booking)
+		firstNames = append(firstNames, booking["firstName"])
 	}
 	//A function can "return" data as a result
 	//So a function can take an input and return an output
@@ -225,7 +226,15 @@ func getUserInput() (string, string, string, uint) {
 
 func bookTicket(userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - userTickets
-	bookings = append(bookings, firstName+" "+lastName)
+
+	//Create a map for a user
+	var userData = make(map[string]string)
+	userData["firstName"] = firstName
+	userData["lastName"] = lastName
+	userData["email"] = email
+	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
+
+	bookings = append(bookings, userData)
 
 	//fmt.Printf("The whole slice: %v\n", bookings)
 	//fmt.Printf("The first value: %v\n", bookings[0])
