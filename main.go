@@ -24,6 +24,8 @@ var conferenceName = "Go Conference"
 var remainingTickets uint = 50
 var bookings = make([]UserData, 0)
 
+//Stands for "Structure"
+//Can hold mixed data types
 type UserData struct {
 	firstName       string
 	lastName        string
@@ -31,6 +33,8 @@ type UserData struct {
 	numberOfTickets uint
 }
 
+//Waits for the launched goroutine to finish
+//Package "sync" provides basic synchronization functionality
 var wg sync.WaitGroup
 
 func main() {
@@ -136,9 +140,14 @@ func main() {
 		//	firstNames = append(firstNames, names[0])
 		//}
 		//fmt.Printf("The first names of bookings are: %v\n", firstNames)
+
+		//Add: sets the number of goroutines to wait for (increases the counter by the provided number)
 		wg.Add(1)
 
+		//"go ..." | starts a new goroutine
+		//A goroutine is a lightweight thread managed by the Go routine
 		go sendTicket(userTickets, firstName, lastName, email)
+
 		firstNames := getFirstNames()
 		fmt.Printf("The first names of bookings are: %v\n", firstNames)
 		//var noTicketsRemaining bool = remainingTickets == 0
@@ -168,6 +177,7 @@ func main() {
 		//You can have unlimited "else if" statments
 		//Only 1 "if" statement and 1 "else" statement
 	}
+	//Wait: Blocks until the WaitGroup counter is 0
 	wg.Wait()
 }
 
@@ -264,10 +274,12 @@ func bookTicket(userTickets uint, firstName string, lastName string, email strin
 }
 
 func sendTicket(userTickets uint, firstName string, lastName string, email string) {
+	//The sleep function stops or blocks the current "thread" (goroutine) execution for the defined duration
 	time.Sleep(10 * time.Second)
 	var ticket = fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
 	fmt.Println("#####################")
 	fmt.Printf("Sending ticket:\n %v \nto email address %v\n", ticket, email)
 	fmt.Println("#####################")
+	//Done: Decrements the WaitGroup counter by 1 | So this is called by the goroutine to indicate it's finished
 	wg.Done()
 }
