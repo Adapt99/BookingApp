@@ -7,6 +7,8 @@ import (
 	//"BookApp1-techworldnana/helper"
 	"fmt"
 	"strings"
+	"sync"
+	"time"
 )
 
 //Package level variables
@@ -28,6 +30,8 @@ type UserData struct {
 	email           string
 	numberOfTickets uint
 }
+
+var wg sync.WaitGroup
 
 func main() {
 	//Define the variable "conferenceName" and store the value "Go Conference"
@@ -69,114 +73,117 @@ func main() {
 	//ask user for their name
 	//Created for loop to loop the booking application
 	//Added condition below to run loop as long as it is met
-	for remainingTickets > 0 && len(bookings) < 50 {
+	//for remainingTickets > 0 && len(bookings) < 50 {
 
-		firstName, lastName, email, userTickets := getUserInput()
-		//in Go variables without a value must be assigned a data type
-		//String data types generally for text based
-		//Int(Integer) data types generally for whole numbers
-		//var firstName string
-		//var lastName string
-		//var email string
-		//var userTickets uint
-		//Scan interprets user input
-		//Pointer is a variable that points to the memory address of another variable
-		//fmt.Println("Enter your first name: ")
-		//fmt.Scan(&firstName)
+	firstName, lastName, email, userTickets := getUserInput()
+	//in Go variables without a value must be assigned a data type
+	//String data types generally for text based
+	//Int(Integer) data types generally for whole numbers
+	//var firstName string
+	//var lastName string
+	//var email string
+	//var userTickets uint
+	//Scan interprets user input
+	//Pointer is a variable that points to the memory address of another variable
+	//fmt.Println("Enter your first name: ")
+	//fmt.Scan(&firstName)
 
-		//fmt.Println("Enter your last name: ")
-		//fmt.Scan(&lastName)
+	//fmt.Println("Enter your last name: ")
+	//fmt.Scan(&lastName)
 
-		//fmt.Println("Enter your email address: ")
-		//fmt.Scan(&email)
+	//fmt.Println("Enter your email address: ")
+	//fmt.Scan(&email)
 
-		//fmt.Println("Enter number of tickets: ")
-		//fmt.Scan(&userTickets)
+	//fmt.Println("Enter number of tickets: ")
+	//fmt.Scan(&userTickets)
 
-		//Validate user input of first and last name | Length of names entered must be greater or equal to 2
-		//var isValidName bool = len(firstName) >= 2 && len(lastName) >= 2
-		//Validate user input of email | Email must contain @ symbol
-		//isValidEmail := strings.Contains(email, "@")
-		//Validate user input of ticket number | Number must be positive and greater than 0 AND less than or equal to the amount of remaining tickets
-		//isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
+	//Validate user input of first and last name | Length of names entered must be greater or equal to 2
+	//var isValidName bool = len(firstName) >= 2 && len(lastName) >= 2
+	//Validate user input of email | Email must contain @ symbol
+	//isValidEmail := strings.Contains(email, "@")
+	//Validate user input of ticket number | Number must be positive and greater than 0 AND less than or equal to the amount of remaining tickets
+	//isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
 
-		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets)
-		//isValidCity := city == "Singapore" || city == "London"
-		//!isValidCity
-		//isInvalidCity := city != "Singapore" || city != "London"
+	isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets)
+	//isValidCity := city == "Singapore" || city == "London"
+	//!isValidCity
+	//isInvalidCity := city != "Singapore" || city != "London"
 
-		//Modified if statement to include user input validation
-		//Application will not run if criteria isn't met
-		if isValidName && isValidEmail && isValidTicketNumber {
-			//remainingTickets = remainingTickets - userTickets
-			//bookings = append(bookings, firstName+" "+lastName)
+	//Modified if statement to include user input validation
+	//Application will not run if criteria isn't met
+	if isValidName && isValidEmail && isValidTicketNumber {
+		//remainingTickets = remainingTickets - userTickets
+		//bookings = append(bookings, firstName+" "+lastName)
 
-			bookTicket(userTickets, firstName, lastName, email)
-			//fmt.Printf("The whole slice: %v\n", bookings)
-			//fmt.Printf("The first value: %v\n", bookings[0])
-			//fmt.Printf("Slice type: %T\n", bookings)
-			//fmt.Printf("Slice length: %v\n", len(bookings))
+		bookTicket(userTickets, firstName, lastName, email)
+		//fmt.Printf("The whole slice: %v\n", bookings)
+		//fmt.Printf("The first value: %v\n", bookings[0])
+		//fmt.Printf("Slice type: %T\n", bookings)
+		//fmt.Printf("Slice length: %v\n", len(bookings))
 
-			//fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
-			//fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+		//fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
+		//fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
-			//Added "for each" loop nested inside for loop
-			//For each full entry, extract only first names from the bookings
-			//Created Slice with empty values named firstNames
-			//_ (underscore) Blank idenitifier | ignores a variable you don't want to use
-			//Range iterates over elements for different data structures (Not only arrays and slices)
-			//For arrays and slices, range provides the index and value for each element
-			//firstNames := []string{}
-			//for _, booking := range bookings {
-			//	var names = strings.Fields(booking)
-			//	firstNames = append(firstNames, names[0])
-			//}
-			//fmt.Printf("The first names of bookings are: %v\n", firstNames)
+		//Added "for each" loop nested inside for loop
+		//For each full entry, extract only first names from the bookings
+		//Created Slice with empty values named firstNames
+		//_ (underscore) Blank idenitifier | ignores a variable you don't want to use
+		//Range iterates over elements for different data structures (Not only arrays and slices)
+		//For arrays and slices, range provides the index and value for each element
+		//firstNames := []string{}
+		//for _, booking := range bookings {
+		//	var names = strings.Fields(booking)
+		//	firstNames = append(firstNames, names[0])
+		//}
+		//fmt.Printf("The first names of bookings are: %v\n", firstNames)
+		wg.Add(1)
 
-			firstNames := getFirstNames()
-			fmt.Printf("The first names of bookings are: %v\n", firstNames)
-			//var noTicketsRemaining bool = remainingTickets == 0
-			//noTicketsRemaining := remainingTickets == 0
-			if remainingTickets == 0 {
-				//End the program
-				fmt.Println("Our conference is booked. Please come again next time.")
-				break
-			}
-		} else {
-			//Added Error messages to display proper feedback
-			if !isValidName {
-				fmt.Println("First name or last name entered is too short")
-			}
-			if !isValidEmail {
-				fmt.Println("Email address entered doesn't contain @ symbol")
-			}
-			if !isValidTicketNumber {
-				fmt.Println("Number of tickets entered is invalid")
-			}
-			//fmt.Println("Your input data is invalid, please try again.")
-			//fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets\n", remainingTickets, userTickets)
-			//continue causes loop to skip the remainder of its body
-			//immediately retesting its condition
-			//continue
-			//else if userTickets == remainingTickets
-			//You can have unlimited "else if" statments
-			//Only 1 "if" statement and 1 "else" statement
+		go sendTicket(userTickets, firstName, lastName, email)
+		firstNames := getFirstNames()
+		fmt.Printf("The first names of bookings are: %v\n", firstNames)
+		//var noTicketsRemaining bool = remainingTickets == 0
+		//noTicketsRemaining := remainingTickets == 0
+		if remainingTickets == 0 {
+			//End the program
+			fmt.Println("Our conference is booked. Please come again next time.")
+			//break
 		}
+	} else {
+		//Added Error messages to display proper feedback
+		if !isValidName {
+			fmt.Println("First name or last name entered is too short")
+		}
+		if !isValidEmail {
+			fmt.Println("Email address entered doesn't contain @ symbol")
+		}
+		if !isValidTicketNumber {
+			fmt.Println("Number of tickets entered is invalid")
+		}
+		//fmt.Println("Your input data is invalid, please try again.")
+		//fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets\n", remainingTickets, userTickets)
+		//continue causes loop to skip the remainder of its body
+		//immediately retesting its condition
+		//continue
+		//else if userTickets == remainingTickets
+		//You can have unlimited "else if" statments
+		//Only 1 "if" statement and 1 "else" statement
 	}
-	//Switch statements
-	//Based on selected city, different code will be executed
-	//city := "London"
-	//switch city {
-	//case "New York":
-	//execute code
-	//case "Singapore", "Hong Kong":
-	//execute code for Singapore & Hong Kong
-	//case "London":
-	//execute code
-	//default:
-	//fmt.Print("No valid city selected")
-	//}
+	wg.Wait()
 }
+
+//Switch statements
+//Based on selected city, different code will be executed
+//city := "London"
+//switch city {
+//case "New York":
+//execute code
+//case "Singapore", "Hong Kong":
+//execute code for Singapore & Hong Kong
+//case "London":
+//execute code
+//default:
+//fmt.Print("No valid city selected")
+//}
 
 //Function is only executed, when "called"
 //You can call a function infinitely
@@ -254,4 +261,13 @@ func bookTicket(userTickets uint, firstName string, lastName string, email strin
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+}
+
+func sendTicket(userTickets uint, firstName string, lastName string, email string) {
+	time.Sleep(10 * time.Second)
+	var ticket = fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
+	fmt.Println("#####################")
+	fmt.Printf("Sending ticket:\n %v \nto email address %v\n", ticket, email)
+	fmt.Println("#####################")
+	wg.Done()
 }
